@@ -16,40 +16,69 @@ Made at Drexel University's IEEE DragonHacks 2016.
 //Pushbutton switch demo: LED is connected to digital pin 8 and Pushbutton is connected to digital pin 12. 
 //The LED glows when the button is pressed.
  
-char redInputState;
-int redButton = 0;
-int redLed = 1;
-
-char blueInputState;
-int blueLed = 4;
-int blueButton = 5;
-
 char greenInputState;
-int greenLed = 8;
-int greenButton = 9;
+int greenButton = 2;
+int greenLed = 3;
 
 char yellowInputState;
-int yellowLed = 12;
-int yellowButton = 13;
+int yellowButton = 5;
+int yellowLed = 6;
+
+char redInputState;
+int redButton = 8;
+int redLed = 9;
+
+
+char blueInputState;
+int blueButton = 12;
+int blueLed = 13;
 
 void setup()   
 {                
-  pinMode(redLed, OUTPUT);        // Initialize Arduino Digital Pins 8 as output for connecting LED
-  pinMode(redButton,INPUT);         // Initialize Arduino Digital Pins 12 as input for connecting Pushbutton
+  pinMode(greenLed, OUTPUT);      
+  pinMode(greenButton,INPUT);
   
+  pinMode(yellowLed, OUTPUT);
+  pinMode(yellowButton, INPUT);
+  
+  pinMode(redLed, OUTPUT);
+  pinMode(redButton, INPUT);
+
   pinMode(blueLed, OUTPUT);
   pinMode(blueButton, INPUT);
   
-  pinMode(greenLed, OUTPUT);
-  pinMode(greenButton, INPUT);
-
-  pinMode(yellowLed, OUTPUT);
-  pinMode(yellowButton, INPUT);
 }
  
  
 void loop()                     
 {
+  //Test if green light's button is pushed
+  greenInputState = digitalRead(greenButton); //Repeat code replacing "green" everywhere with other color pins.
+  
+  if (greenInputState == HIGH) 
+  {     
+    digitalWrite(greenLed, HIGH);  //Switch on LED
+    
+  } 
+  else 
+  {
+    digitalWrite(greenLed, LOW);   //Switch off LED
+   
+  }
+
+  //Test if yellow light's button is pushed
+  yellowInputState = digitalRead(yellowButton); //Repeat code replacing "yellow" everywhere with other color pins.
+ 
+  if (yellowInputState == HIGH) 
+  {     
+    digitalWrite(yellowLed, HIGH);  //Switch on LED
+  } 
+  else 
+  {
+    digitalWrite(yellowLed, LOW);   //Switch off LED
+  }
+
+  //Test if red light's button is pushed
   redInputState = digitalRead(redButton); //Repeat code replacing "red" everywhere with other color pins.
  
   if (redInputState == HIGH) 
@@ -60,5 +89,17 @@ void loop()
   {
     digitalWrite(redLed, LOW);   //Switch off LED
   }
+
+  //Test if blue light's button is pushed
+  blueInputState = digitalRead(blueButton); //Repeat code replacing "blue" everywhere with other color pins.
  
+  if (blueInputState == HIGH) 
+  {     
+    digitalWrite(blueLed, HIGH);  //Switch on LED
+  } 
+  else 
+  {
+    digitalWrite(blueLed, LOW);   //Switch off LED
+  }
+
 }
