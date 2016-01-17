@@ -13,10 +13,52 @@ Made at Drexel University's IEEE DragonHacks 2016.
 
 */
 
-void setup {
-  printf("Setup something");
-}
+//Pushbutton switch demo: LED is connected to digital pin 8 and Pushbutton is connected to digital pin 12. 
+//The LED glows when the button is pressed.
+ 
+char redInputState;
+int redButton = 0;
+int redLed = 1;
 
-void loop {
-  printf("Loop something");
+char blueInputState;
+int blueLed = 4;
+int blueButton = 5;
+
+char greenInputState;
+int greenLed = 8;
+int greenButton = 9;
+
+char yellowInputState;
+int yellowLed = 12;
+int yellowButton = 13;
+
+void setup()   
+{                
+  pinMode(redLed, OUTPUT);        // Initialize Arduino Digital Pins 8 as output for connecting LED
+  pinMode(redButton,INPUT);         // Initialize Arduino Digital Pins 12 as input for connecting Pushbutton
+  
+  pinMode(blueLed, OUTPUT);
+  pinMode(blueButton, INPUT);
+  
+  pinMode(greenLed, OUTPUT);
+  pinMode(greenButton, INPUT);
+
+  pinMode(yellowLed, OUTPUT);
+  pinMode(yellowButton, INPUT);
+}
+ 
+ 
+void loop()                     
+{
+  redInputState = digitalRead(redButton); //Repeat code replacing "red" everywhere with other color pins.
+ 
+  if (redInputState == HIGH) 
+  {     
+    digitalWrite(redLed, HIGH);  //Switch on LED
+  } 
+  else 
+  {
+    digitalWrite(redLed, LOW);   //Switch off LED
+  }
+ 
 }
