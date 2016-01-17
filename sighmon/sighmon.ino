@@ -37,25 +37,25 @@ int tonePin=9;
 
 int colorArray[4] = {greenLed, yellowLed, redLed, blueLed};
 int randomColors[100];
-for (int i = 0; i < 100; i++){
-  randomColors[i] = colorArray[random(0,4)]
-}
 
 //char order[100];
 char bufffer[20];
 
-int counter = 0;
+int counter = 1;
 
 void flashLights(int levels) {
   for (int i = 0; i < levels; i++) {
       digitalWrite(randomColors[i], HIGH);
       delay(1000);
+      digitalWrite(randomColors[i], LOW);
+      delay(1000);
   }
 }
 
-void playerGo()
+void playerGo(int rounds)
 {
-    //Test if green light's button is pushed
+  for (int i = 0; i < rounds; i++) {
+  //Test if green light's button is pushed
   greenInputState = digitalRead(greenButton); //Repeat code replacing "green" everywhere with other color pins.
 
   if (greenInputState == HIGH)
@@ -111,6 +111,8 @@ void playerGo()
     digitalWrite(blueLed, LOW);   //Switch off LED
     noTone(tonePin);
   }
+  }
+  delay(1000);
 }
 
 void setup()
@@ -130,12 +132,35 @@ void setup()
   pinMode(blueButton, INPUT);
 
   pinMode(tonePin,OUTPUT);
+
 }
 
 void loop()
 {
-  flashLights(10);
-  playerGo();
+  for (int i = 0; i < 100; i++){
+  randomColors[i] = colorArray[random(0,4)];
+  }
+  flashLights(counter);
+  
+  while(digitalRead(greenButton == LOW) && digitalRead(yellowButton == LOW) && digitalRead(redButton == LOW) && digitalRead(blueButton == LOW)){
+      playerGo(counter);
+      if(greenInputState == HIGH || yellowInputState == HIGH || redInputState == HIGH || blueInputState == HIGH) {
+        break;
+      }
+    };
+    
+  for (int i = 0; i < 1; i++)
+  {
+    counter++;
+    i++;
+  };
+  
+  
+  /*for (int i = 0; i < 2; i++){
+  randomColors[i] = colorArray[random(0,4)];
+  flashLights(3);
+  delay(5000);
+ }*/
 
   /*strcat(order, itoa(randomColor,bufffer,10));
   int randNumber = random(10, 20);
