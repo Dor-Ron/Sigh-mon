@@ -35,31 +35,14 @@ int blueLed = 7;
 
 int tonePin=9;
 
-void setup()   
-{
-  Serial.begin(9600);
-  
-  pinMode(greenLed, OUTPUT);      
-  pinMode(greenButton,INPUT);
-  
-  pinMode(yellowLed, OUTPUT);
-  pinMode(yellowButton, INPUT);
-  
-  pinMode(redLed, OUTPUT);
-  pinMode(redButton, INPUT);
+int colorArray[4] = {greenLed, yellowLed, redLed, blueLed};
+int randomColor = colorArray[random(0,4)];
+char order[100];
+char bufffer[20];
 
-  pinMode(blueLed, OUTPUT);
-  pinMode(blueButton, INPUT);
-  
-  pinMode(tonePin,OUTPUT);
-  
-  
-}
- 
- 
-void loop()                     
+void playerGo()
 {
-  //Test if green light's button is pushed
+    //Test if green light's button is pushed
   greenInputState = digitalRead(greenButton); //Repeat code replacing "green" everywhere with other color pins.
   
   if (greenInputState == HIGH) 
@@ -115,5 +98,33 @@ void loop()
     digitalWrite(blueLed, LOW);   //Switch off LED
     noTone(tonePin);
   }
+}
+
+void setup()   
+{
+  Serial.begin(9600);
+  
+  pinMode(greenLed, OUTPUT);      
+  pinMode(greenButton,INPUT);
+  
+  pinMode(yellowLed, OUTPUT);
+  pinMode(yellowButton, INPUT);
+  
+  pinMode(redLed, OUTPUT);
+  pinMode(redButton, INPUT);
+
+  pinMode(blueLed, OUTPUT);
+  pinMode(blueButton, INPUT);
+  
+  pinMode(tonePin,OUTPUT);
+}
+ 
+void loop()                     
+{
+  playerGo();
+
+  /*strcat(order, itoa(randomColor,bufffer,10));
+  int randNumber = random(10, 20);
+  Serial.println(colorArray[random(0,4)]);*/
 
 }
