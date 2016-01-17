@@ -34,14 +34,22 @@ int tonePin=9;
 
 int colorArray[4] = {greenLed, yellowLed, redLed, blueLed};
 int randomColors[100];
+int userGuesses[100];
 
-//char order[100];
-char bufffer[20];
+int counter = 0;
 
-int counter = 1;
+bool checkStates() {
+    if(digitalRead(greenButton == LOW) && digitalRead(yellowButton == LOW) && digitalRead(redButton == LOW) && digitalRead(blueButton == LOW)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+bool currentState = checkStates();
 
 void flashLights(int levels) {
-  for (int i = 0; i < levels; i++) {
+  for (int i = 0; i <= levels; i++) {
       digitalWrite(randomColors[i], HIGH);
       delay(1000);
       digitalWrite(randomColors[i], LOW);
@@ -61,10 +69,13 @@ void playerGo(int rounds)
         tone(tonePin, 1318);
 
       }
-      else
+      else if (greenInputState == LOW)
       {
         digitalWrite(greenLed, LOW);   //Switch off LED
         noTone(tonePin);
+      }
+      else {
+        continue;
       }
 
       //Test if yellow light's button is pushed
@@ -109,7 +120,6 @@ void playerGo(int rounds)
         noTone(tonePin);
       }
   }
-  delay(1000);
 }
 
 void setup()
@@ -133,23 +143,25 @@ void setup()
   for (int i = 0; i < 100; i++){
       randomColors[i] = colorArray[random(0,4)];
   }
+
 }
 
-Serial.println(colorArray);
 
 void loop()
 {
+  currentState = true;
   flashLights(counter);
-  while(digitalRead(greenButton == LOW) && digitalRead(yellowButton == LOW) && digitalRead(redButton == LOW) && digitalRead(blueButton == LOW)){
-      playerGo(counter);
-      if(greenInputState == HIGH || yellowInputState == HIGH || redInputState == HIGH || blueInputState == HIGH) {
-        break;
+  
+  while(currentState){
+    
+    if(digitalRead(greenButton) == HIGH || digitalRead(yellowButton) == HIGH || digitalRead(redButton) == HIGH || digitalRead(blueButton) == HIGH) {
+      currentState = false;
     }
+    }
+      /*if(greenInputState == HIGH || yellowInputState == HIGH || redInputState == HIGH || blueInputState == HIGH) {
+        counter++;
+        break;
   };
-
-  for (int i = 0; i < 1; i++)
-  {
-    counter++;
-    i++;
-  };
+  playerGo(10);*/
+  counter++;
 }
