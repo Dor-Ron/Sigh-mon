@@ -13,9 +13,9 @@ Made at Drexel University's IEEE DragonHacks 2016.
 
 */
 
-//Pushbutton switch demo: LED is connected to digital pin 8 and Pushbutton is connected to digital pin 12. 
+//Pushbutton switch demo: LED is connected to digital pin 8 and Pushbutton is connected to digital pin 12.
 //The LED glows when the button is pressed.
- 
+
 char greenInputState;
 int greenButton = 21;
 int greenLed = 20;
@@ -36,22 +36,35 @@ int blueLed = 7;
 int tonePin=9;
 
 int colorArray[4] = {greenLed, yellowLed, redLed, blueLed};
-int randomColor = colorArray[random(0,4)];
-char order[100];
+int randomColors[100];
+for (int i = 0; i < 100; i++){
+  randomColors[i] = colorArray[random(0,4)]
+}
+
+//char order[100];
 char bufffer[20];
+
+int counter = 0;
+
+void flashLights(int levels) {
+  for (int i = 0; i < levels; i++) {
+      digitalWrite(randomColors[i], HIGH);
+      delay(1000);
+  }
+}
 
 void playerGo()
 {
     //Test if green light's button is pushed
   greenInputState = digitalRead(greenButton); //Repeat code replacing "green" everywhere with other color pins.
-  
-  if (greenInputState == HIGH) 
-  {     
+
+  if (greenInputState == HIGH)
+  {
     digitalWrite(greenLed, HIGH);  //Switch on LED
     tone(tonePin,1318);
-    
-  } 
-  else 
+
+  }
+  else
   {
     digitalWrite(greenLed, LOW);   //Switch off LED
     noTone(tonePin);
@@ -59,13 +72,13 @@ void playerGo()
 
   //Test if yellow light's button is pushed
   yellowInputState = digitalRead(yellowButton); //Repeat code replacing "yellow" everywhere with other color pins.
- 
-  if (yellowInputState == HIGH) 
-  {     
+
+  if (yellowInputState == HIGH)
+  {
     digitalWrite(yellowLed, HIGH);  //Switch on LED
     tone(tonePin,554);
-  } 
-  else 
+  }
+  else
   {
     digitalWrite(yellowLed, LOW);   //Switch off LED
     noTone(tonePin);
@@ -73,13 +86,13 @@ void playerGo()
 
   //Test if red light's button is pushed
   redInputState = digitalRead(redButton); //Repeat code replacing "red" everywhere with other color pins.
- 
-  if (redInputState == HIGH) 
-  {     
+
+  if (redInputState == HIGH)
+  {
     digitalWrite(redLed, HIGH);  //Switch on LED
     tone(tonePin,880);
-  } 
-  else 
+  }
+  else
   {
     digitalWrite(redLed, LOW);   //Switch off LED
     noTone(tonePin);
@@ -87,40 +100,41 @@ void playerGo()
 
   //Test if blue light's button is pushed
   blueInputState = digitalRead(blueButton); //Repeat code replacing "blue" everywhere with other color pins.
- 
-  if (blueInputState == HIGH) 
-  {     
+
+  if (blueInputState == HIGH)
+  {
     digitalWrite(blueLed, HIGH);  //Switch on LED
     tone(tonePin,659);
-  } 
-  else 
+  }
+  else
   {
     digitalWrite(blueLed, LOW);   //Switch off LED
     noTone(tonePin);
   }
 }
 
-void setup()   
+void setup()
 {
   Serial.begin(9600);
-  
-  pinMode(greenLed, OUTPUT);      
+
+  pinMode(greenLed, OUTPUT);
   pinMode(greenButton,INPUT);
-  
+
   pinMode(yellowLed, OUTPUT);
   pinMode(yellowButton, INPUT);
-  
+
   pinMode(redLed, OUTPUT);
   pinMode(redButton, INPUT);
 
   pinMode(blueLed, OUTPUT);
   pinMode(blueButton, INPUT);
-  
+
   pinMode(tonePin,OUTPUT);
 }
- 
-void loop()                     
+
+void loop()
 {
+  flashLights(10);
   playerGo();
 
   /*strcat(order, itoa(randomColor,bufffer,10));
