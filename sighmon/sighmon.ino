@@ -37,6 +37,7 @@ int randomColors[100];
 int userGuesses[100];
 
 int counter = 0;
+int clickCount = 0;
 
 bool checkStates() {
     if(digitalRead(greenButton == LOW) && digitalRead(yellowButton == LOW) && digitalRead(redButton == LOW) && digitalRead(blueButton == LOW)) {
@@ -57,9 +58,8 @@ void flashLights(int levels) {
   }
 }
 
-void playerGo(int rounds)
+void playerGo()
 {
-  for (int i = 0; i < rounds; i++) {
       //Test if green light's button is pushed
       greenInputState = digitalRead(greenButton); //Repeat code replacing "green" everywhere with other color pins.
 
@@ -67,17 +67,14 @@ void playerGo(int rounds)
       {
         digitalWrite(greenLed, HIGH);  //Switch on LED
         tone(tonePin, 1318);
-
+        clickCount++;
       }
-      else if (greenInputState == LOW)
+      else
       {
         digitalWrite(greenLed, LOW);   //Switch off LED
         noTone(tonePin);
       }
-      else {
-        continue;
-      }
-
+     
       //Test if yellow light's button is pushed
       yellowInputState = digitalRead(yellowButton); //Repeat code replacing "yellow" everywhere with other color pins.
 
@@ -85,6 +82,7 @@ void playerGo(int rounds)
       {
         digitalWrite(yellowLed, HIGH);  //Switch on LED
         tone(tonePin, 554);
+        clickCount++;
       }
       else
       {
@@ -99,6 +97,7 @@ void playerGo(int rounds)
       {
         digitalWrite(redLed, HIGH);  //Switch on LED
         tone(tonePin, 880);
+        clickCount++;
       }
       else
       {
@@ -113,13 +112,13 @@ void playerGo(int rounds)
       {
         digitalWrite(blueLed, HIGH);  //Switch on LED
         tone(tonePin,659);
+        clickCount++;
       }
       else
       {
         digitalWrite(blueLed, LOW);   //Switch off LED
         noTone(tonePin);
       }
-  }
 }
 
 void setup()
@@ -149,19 +148,24 @@ void setup()
 
 void loop()
 {
-  currentState = true;
+  clickCount = 0;
   flashLights(counter);
-  
-  while(currentState){
-    
-    if(digitalRead(greenButton) == HIGH || digitalRead(yellowButton) == HIGH || digitalRead(redButton) == HIGH || digitalRead(blueButton) == HIGH) {
-      currentState = false;
-    }
-    }
-      /*if(greenInputState == HIGH || yellowInputState == HIGH || redInputState == HIGH || blueInputState == HIGH) {
-        counter++;
-        break;
-  };
-  playerGo(10);*/
   counter++;
+  while(true){
+    playerGo();
+    if(clickCount == 0) {
+      continue;
+    }
+    else if(clickCount == counter + 1) {
+      delay(1000);
+      break;
+    }
+    else {
+      continue;
+    }
+  }
+    /*if(digitalRead(greenButton) == HIGH || digitalRead(yellowButton) == HIGH || digitalRead(redButton) == HIGH || digitalRead(blueButton) == HIGH){
+      break;
+    }*/
+  
 }
